@@ -5,77 +5,46 @@ output:
   md_document:
     toc: true
     toc_depth: 3
+  # pdf_document:
+  #   fig_caption: yes
+  #   toc: true
+  #   toc_depth: 3
 header-includes: 
  \usepackage{float}
  \usepackage{url}
  \usepackage{booktabs}
  \usepackage{multirow}
- \newcommand{\Nat}{\mathbb{N}}
- \newcommand{\Real}{\mathbb{R}}
- \newcommand{\cd}{\mathit{cd}}  
- \newcommand{\mk}{\mathbf{m}}   
- \newcommand{\Dom}{\mathit{Dom}} 
- \newcommand{\Tuple}[1]{\ensuremath{\langle 1\rangle}}
- \newcommand{\In}{I}
- \newcommand{\Out}{O} 
- \newcommand{\rate}{\varphi} 
- \newcommand{\Gard}{\Theta}
- \newcommand{\Class}{\mathcal{C}}
- \renewcommand {\Pr} {\mathbb{P}}
- \newcommand {\Es} {{\mathbb E}}
- \newcommand{\ABm}{\ensuremath{\mathcal{A}}} 
- \newcommand{\RBm}{\ensuremath{\mathcal{R}}} 
- \newcommand{\theLanguage}{\ensuremath{\mathcal L}}
- \newcommand{\tuple}[1]{\ensuremath{\langle 1 \rangle}}
- \newcommand{\bag}[1]{\ensuremath{Bag[ 1 ]}}
- \newcommand{\Inputp}{^{\bullet} \mathbf{t} }
- \newcommand{\Outputp}{  \mathbf{t} ^\bullet}
- \newcommand{\Inputpprim}{^{\bullet} \mathbf{t'} }
- \newcommand{\mm}{\ensuremath{x}} 
  \floatplacement{figure}{H}
  \usepackage{caption}
  \captionsetup[table]{skip=10pt}
  
 bibliography: biblio.bib  
+
 vignette: >
   %\VignetteIndexEntry{my-vignette}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
+ 
 )
 ```
 
-```{r wrap-hook,include = FALSE }
-library(knitr)
-hook_output = knit_hooks$get('output')
-knit_hooks$set(output = function(x, options) {
-  # this hook is used only when the linewidth option is not NULL
-  if (!is.null(n <- options$linewidth)) {
-    x = knitr:::split_lines(x)
-    # any lines wider than n should be wrapped
-    if (any(nchar(x) > n)) x = strwrap(x, width = n)
-    x = paste(x, collapse = '\n')
-  }
-  hook_output(x, options)
-})
-```
 
 ## The Lotka–Volterra model
 
 The Lotka–Volterra equations, also known as the predator–prey equations, are a pair of first-order nonlinear differential equations, frequently used to describe the dynamics of biological systems in which two species interact, one as a predator and the other as prey. The populations change through time according to the pair of equations:
 
-
+$$
 \begin{align}
   \frac{dx}{dt} &= \alpha x-\beta xy,\\
-  \frac{dy}{dt} &=\delta xy-\gamma y,
+  \frac{dy}{dt} &= \delta xy-\gamma y,  \nonumber
 \end{align}
-
+$$
 where:
 
 1. $x$ is the number of prey (for example, rabbits);
@@ -245,7 +214,7 @@ ggplot( )+
               arrow=arrow(length=unit(0.3,"cm"),ends="first"))
 ```
 
-![PRCC for the **Predator** place over time.](./results_Sensitivity/prcc_PredyPredator-sensitivity.pdf)
+![PRCC for the **Predator** place over time.](./Results/results_sensitivity_analysis/prcc_Lotka-Volterra-sensitivity.pdf)
 
 Running the sensisitivity analysis, we can replicate the results reported on Wikipedia, *https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations*. Indeed, textual file for each generated parameter combination (i.e. 20) containing the system  solution is returned. Each file is characterized by as many rows as the solution time points (obtained dividing the final time point by the time step) and as many columns as the system components.
 We can now generate the phase-space plot, where it is possible to see that the predators thrive when there are plentiful prey but, ultimately, outstrip their food supply and decline. As the predator population is low, the prey population will increase again. These dynamics continue in a cycle of growth and decline.

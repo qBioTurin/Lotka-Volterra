@@ -14,6 +14,12 @@ used to describe the dynamics of biological systems in which two species
 interact, one as a predator and the other as prey. The populations
 change through time according to the pair of equations:
 
+$$
+\\begin{align}
+  \\frac{dx}{dt} &= \\alpha x-\\beta xy,\\\\
+  \\frac{dy}{dt} &= \\delta xy-\\gamma y,  \\nonumber
+\\end{align}
+$$
 where:
 
 1.  *x* is the number of prey (for example, rabbits);
@@ -149,7 +155,7 @@ the same name of the corresponding R file.
 ![](ReadMe_files/figure-markdown_strict/unnamed-chunk-10-1.png)
 
 ![PRCC for the **Predator** place over
-time.](./results_Sensitivity/prcc_PredyPredator-sensitivity.pdf)
+time.](./Results/results_sensitivity_analysis/prcc_Lotka-Volterra-sensitivity.pdf)
 
 Running the sensisitivity analysis, we can replicate the results
 reported on Wikipedia,
