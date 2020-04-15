@@ -14,17 +14,12 @@ used to describe the dynamics of biological systems in which two species
 interact, one as a predator and the other as prey. The populations
 change through time according to the pair of equations:
 
-$$
-\\begin{align}
-  \\frac{dx}{dt} &= \\alpha x-\\beta xy,\\\\
-  \\frac{dy}{dt} &= \\delta xy-\\gamma y,  \\nonumber
-\\end{align}
-$$
+$$ \begin{align} \frac{dx}{dt} &= \alpha x-\beta xy,\\ \frac{dy}{dt} &= \delta xy-\gamma y,  \nonumber \end{align} $$
 where:
 
 1.  *x* is the number of prey (for example, rabbits);
 2.  *y* is the number of some predator (for example, foxes);
-3.  $\\frac{dy}{dt}$ and $\\frac{dx}{dt}$ represent the instantaneous
+3.  $\frac{dy}{dt}$ and $\frac{dx}{dt}$ represent the instantaneous
     growth rates of the two populations;
 4.  *t* represents time;
 5.  *α*, *β*, *γ*, *θ* are positive real parameters describing the
