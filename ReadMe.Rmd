@@ -39,14 +39,17 @@ knit_hooks$set(output = function(x, options) {
 
 The Lotka–Volterra equations, also known as the predator–prey equations, are a pair of first-order nonlinear differential equations, frequently used to describe the dynamics of biological systems in which two species interact, one as a predator and the other as prey. The populations change through time according to the pair of equations:
 
-$$ \begin{aligned} \frac{dx}{dt} &= \alpha x-\beta xy,\\
-{\frac {dy}{dt}}&=\delta xy-\gamma y, \end{aligned}$$
+
+\begin{aligned}
+  \frac{dx}{dt} &= \alpha x-\beta xy,\\
+  \frac{dy}{dt} &=\delta xy-\gamma y,
+\end{aligned}
 
 where:
 
 1. $x$ is the number of prey (for example, rabbits);
 2. $y$ is the number of some predator (for example, foxes);
-3. ${\tfrac {dy}{dt}}$ and ${\tfrac {dx}{dt}}$ represent the instantaneous growth rates of the two populations;
+3. $\frac{dy}{dt}$ and $\frac{dx}{dt}$ represent the instantaneous growth rates of the two populations;
 4. $t$ represents time;
 5. $\alpha,\ \beta,\ \gamma,\ \theta$ are positive real parameters describing the interaction of the two species.
 

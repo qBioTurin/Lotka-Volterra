@@ -14,15 +14,12 @@ used to describe the dynamics of biological systems in which two species
 interact, one as a predator and the other as prey. The populations
 change through time according to the pair of equations:
 
-$$ \\begin{aligned} \\frac{dx}{dt} &= \\alpha x-\\beta xy,\\\\
-{\\frac {dy}{dt}}&=\\delta xy-\\gamma y, \\end{aligned}$$
-
 where:
 
 1.  *x* is the number of prey (for example, rabbits);
 2.  *y* is the number of some predator (for example, foxes);
-3.  ${\\tfrac {dy}{dt}}$ and ${\\tfrac {dx}{dt}}$ represent the
-    instantaneous growth rates of the two populations;
+3.  $\\frac{dy}{dt}$ and $\\frac{dx}{dt}$ represent the instantaneous
+    growth rates of the two populations;
 4.  *t* represents time;
 5.  *α*, *β*, *γ*, *θ* are positive real parameters describing the
     interaction of the two species.
@@ -149,7 +146,7 @@ the same name of the corresponding R file.
                                       f_time = 20,
                                       s_time = .1)
 
-![](my-vignette_files/figure-markdown_strict/unnamed-chunk-10-1.png)
+![](ReadMe_files/figure-markdown_strict/unnamed-chunk-10-1.png)
 
 ![PRCC for the **Predator** place over
 time.](./results_Sensitivity/prcc_PredyPredator-sensitivity.pdf)
