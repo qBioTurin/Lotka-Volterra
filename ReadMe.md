@@ -14,7 +14,7 @@ used to describe the dynamics of biological systems in which two species
 interact, one as a predator and the other as prey. The populations
 change through time according to the pair of equations:
 
-$$ \begin{align} \frac{dx}{dt} &= \alpha x-\beta xy,\\ \frac{dy}{dt} &= \delta xy-\gamma y,  \nonumber \end{align} $$
+![\begin{align}   \frac{dx}{dt} &= \alpha x-\beta xy,\\   \frac{dy}{dt} &= \delta xy-\gamma y,  \nonumber \end{align}](https://render.githubusercontent.com/render/math?math=%5Cbegin%7Balign%7D%20%20%20%5Cfrac%7Bdx%7D%7Bdt%7D%20%26%3D%20%5Calpha%20x-%5Cbeta%20xy%2C%5C%5C%20%20%20%5Cfrac%7Bdy%7D%7Bdt%7D%20%26%3D%20%5Cdelta%20xy-%5Cgamma%20y%2C%20%20%5Cnonumber%20%5Cend%7Balign%7D)
 where:
 
 1.  *x* is the number of prey (for example, rabbits);
