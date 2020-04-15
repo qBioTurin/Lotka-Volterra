@@ -5,6 +5,37 @@ output:
   md_document:
     toc: true
     toc_depth: 3
+header-includes: 
+ \usepackage{float}
+ \usepackage{url}
+ \usepackage{booktabs}
+ \usepackage{multirow}
+ \newcommand{\Nat}{\mathbb{N}}
+ \newcommand{\Real}{\mathbb{R}}
+ \newcommand{\cd}{\mathit{cd}}  
+ \newcommand{\mk}{\mathbf{m}}   
+ \newcommand{\Dom}{\mathit{Dom}} 
+ \newcommand{\Tuple}[1]{\ensuremath{\langle 1\rangle}}
+ \newcommand{\In}{I}
+ \newcommand{\Out}{O} 
+ \newcommand{\rate}{\varphi} 
+ \newcommand{\Gard}{\Theta}
+ \newcommand{\Class}{\mathcal{C}}
+ \renewcommand {\Pr} {\mathbb{P}}
+ \newcommand {\Es} {{\mathbb E}}
+ \newcommand{\ABm}{\ensuremath{\mathcal{A}}} 
+ \newcommand{\RBm}{\ensuremath{\mathcal{R}}} 
+ \newcommand{\theLanguage}{\ensuremath{\mathcal L}}
+ \newcommand{\tuple}[1]{\ensuremath{\langle 1 \rangle}}
+ \newcommand{\bag}[1]{\ensuremath{Bag[ 1 ]}}
+ \newcommand{\Inputp}{^{\bullet} \mathbf{t} }
+ \newcommand{\Outputp}{  \mathbf{t} ^\bullet}
+ \newcommand{\Inputpprim}{^{\bullet} \mathbf{t'} }
+ \newcommand{\mm}{\ensuremath{x}} 
+ \floatplacement{figure}{H}
+ \usepackage{caption}
+ \captionsetup[table]{skip=10pt}
+ 
 bibliography: biblio.bib  
 vignette: >
   %\VignetteIndexEntry{my-vignette}
@@ -40,10 +71,10 @@ knit_hooks$set(output = function(x, options) {
 The Lotka–Volterra equations, also known as the predator–prey equations, are a pair of first-order nonlinear differential equations, frequently used to describe the dynamics of biological systems in which two species interact, one as a predator and the other as prey. The populations change through time according to the pair of equations:
 
 
-\begin{aligned}
+\begin{align}
   \frac{dx}{dt} &= \alpha x-\beta xy,\\
   \frac{dy}{dt} &=\delta xy-\gamma y,
-\end{aligned}
+\end{align}
 
 where:
 
