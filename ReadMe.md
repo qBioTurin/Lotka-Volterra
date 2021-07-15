@@ -180,7 +180,6 @@ general idea of the simulation’ results.
                       ini_v = c(5,5),
                       ub_v = c(10, 10),
                       lb_v = c(0, 0),
-                      optim_vector_mod = TRUE,
                       max.time = 60 # seconds
     )
 
