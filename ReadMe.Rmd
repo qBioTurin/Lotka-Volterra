@@ -128,7 +128,7 @@ init_generation<-function(min_init , max_init)
 6. target_value_fname (*Target.R*): an R function in which the place, w.r.t. the PRCC has to be calculated, must be selected from the output data.frame (which represents the output file *.trace* reporting the dynamics of each place).
 
 Assuming the following fixed rates:
-$\beta = 4/3,\  \theta = 1.$
+$\beta = 4/3,\  \sigma = 1.$
 Than we change the prey and predator initial conditions from 200 to 1800, and the prey and predator birth rates $\alpha,\ \gamma$ from 0.1 to 2, knowing that we are interested to the trajectory generated with the following values: $x(0) = 1000,\ y(0)=500,\ \alpha = 2/3,\ \gamma = 1$.
 
 #### PRCC and ranking
@@ -340,7 +340,7 @@ ggplot(DynamicsFirstPart, aes(x= Prey))+
   labs(x="Prey", y="Prey consumed" )
 ```
 
-In Fig.5 the Lotka-Volterra dynamics are showed fixing: $\alpha = 1.1$, $\beta= 0.4$, $\gamma=0.1$, $\theta=0.4$, and the initial number of both the species equals to 10.
+In Fig.5 the Lotka-Volterra dynamics are showed fixing: $\alpha = 1.1$, $\beta= 0.4$, $\gamma=0.1$, $\sigma=0.4$, and the initial number of both the species equals to 10.
 
 ![Fig.5 The Lotka-Volterra dynamics.](./Figures/Dynamics.png)
 
