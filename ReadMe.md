@@ -51,6 +51,8 @@ responses.](./Figures/FunctionalResponsesGraph.png)
 Independently by the functional response exploited, a general version of
 the prey-predator model is defined by the following s system.
 
+![](./Figures/equation1.png)
+
 where:
 
 1.  *x*<sub>*P**r**e**y*</sub> is the number of preys (e.g., caribou,
@@ -84,16 +86,18 @@ prey, thus the product of the two populations is the obvious outcome.
 This model can be easily represented using the SPN formalism, see Fig.2,
 from which the following ODEs system can be derived:
 
+![](./Figures/equation2.png)
+
 where:
 
 1.  *x*<sub>*P**r**e**y*</sub> is the average number of tokens in the
     *Prey* place, representing the preys;
 2.  *x*<sub>*P**r**e**d**a**t**o**r*</sub> is the average number of
     tokens in the *Predator* place, representing the predators;
-3.  *α*, *β*, *γ*, *θ* are positive real parameters describing the
+3.  *α*, *β*, *σ*, *γ* are positive real parameters describing the
     interaction of the two species and defining the rate of the
-    *BirthPrey*, *DeathPrey*, *BirthPredator*, *DeathPrey* transitions,
-    respectively.
+    *BirthPrey*, *DeathPrey*, *BirthPredator*, *DeathPredator*
+    transitions, respectively.
 
 Let use note that Eq.s 2 can be obtained from Eq.s 1 defining
 *g*(*x*<sub>*P**r**e**y*</sub>, *x*<sub>*P**r**e**d**a**t**o**r*</sub>) = *β**x*<sub>*P**r**e**y*</sub>,
@@ -163,7 +167,7 @@ analysis taking as input
     output data.frame (which represents the output file *.trace*
     reporting the dynamics of each place).
 
-Assuming the following fixed rates: *β* = 4/3, *θ* = 1. Than we change
+Assuming the following fixed rates: *β* = 4/3, *σ* = 1. Than we change
 the prey and predator initial conditions from 200 to 1800, and the prey
 and predator birth rates *α*, *γ* from 0.1 to 2, knowing that we are
 interested to the trajectory generated with the following values:
@@ -232,9 +236,7 @@ the same name of the corresponding R file.
                                       f_time = 20,
                                       s_time = .1)
 
-![](ReadMe_files/figure-markdown_strict/unnamed-chunk-10-1.png)
-
-![Fig.4 PRCC for the **Predator** place over
+![Fig.3 PRCC for the **Predator** place over
 time.](./Figures/prcc_Lotka-Volterra-sensitivity.png)
 
 Running the sensisitivity analysis, we can replicate the results
@@ -253,6 +255,8 @@ dynamics continue in a cycle of growth and decline.
 Let us note that it is possible to run the sensitivity analysys without
 PRCC or ranking, in the case that we are intersted only on to have a
 general idea of the simulation’ results.
+
+![Fig.4](./Figures/DynamicsRanking.png)
 
 ### Calibration analysis
 
@@ -286,7 +290,7 @@ model analysis function as follows:
     )
 
 In Fig.5 the Lotka-Volterra dynamics are showed fixing: *α* = 1.1,
-*β* = 0.4, *γ* = 0.1, *θ* = 0.4, and the initial number of both the
+*β* = 0.4, *γ* = 0.1, *σ* = 0.4, and the initial number of both the
 species equals to 10.
 
 ![Fig.5 The Lotka-Volterra dynamics.](./Figures/Dynamics.png)
@@ -311,14 +315,19 @@ is needed to indicate the intake of food, which is modeled using the
 Holling type II term. A simple example of this term is expressed by Eq.
 3, where *a* is the attack rate at which the consumer encounters food
 items per unit of food density, and *h* is the average handling time
-spent on processing a food item. Indeed, more complex examples are given
-in .
+spent on processing a food item.
+
+![](./Figures/equation3.png)
 
 Similarly, type III functional responses can be characterized by the Eq.
 2 if the attack constant rate *a* is defined in function of the number
 of preys , for instance a general form is given by a hyperbolic function
-of *x*<sub>*P**r**e**y*</sub>: in which *b*, *c*, *d* are constants.
-Thus, we can easily derive a general equation of type III as follows:
+of *x*<sub>*P**r**e**y*</sub>:
+
+![](./Figures/equation.png)
+
+in which *b*, *c*, *d* are constants. Thus, we can easily derive a
+general equation of type III as follows: ![](./Figures/equation4.png)
 
 Finally, considering the functional response types described in Eq.s 3
 and 4, in terms of SPN they should define the rate of the *DeathPrey*
@@ -334,6 +343,8 @@ defined by a function *f*<sub>*t*</sub>(*x̂*(*ν*), *ν*), where *x̂*(*ν*)
 represents the vector of the average number of tokens for all the
 transition input places at time *ν*. Hence, the general transition
 velocities of Fig.5 should be defined as follows
+
+![](./Figures/equation5.png)
 
 with *g*() equals to *g*<sub>*I**I*</sub>() from Eq. 3 or
 *g*<sub>*I**I**I*</sub>() from Eq. 4 in order to use a functional
