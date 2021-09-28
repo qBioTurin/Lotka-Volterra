@@ -79,8 +79,8 @@ where:
 
 1.  $x_{Prey}$ is the average number of tokens in the *Prey* place, representing the preys;
 2.  $x_{Predator}$ is the average number of tokens in the *Predator* place, representing the predators;
-3.  $\alpha,\ \beta,\ \gamma,\ \theta$ are positive real parameters
-  describing the interaction of the two species and defining the rate of the *BirthPrey*, *DeathPrey*, *BirthPredator*, *DeathPrey* transitions, respectively.
+3.  $\alpha,\ \beta,\ \sigma,\ \gamma$ are positive real parameters
+  describing the interaction of the two species and defining the rate of the *BirthPrey*, *DeathPrey*, *BirthPredator*, *DeathPredator* transitions, respectively.
 
 Let use note that Eq.s 2 can be obtained from Eq.s 1 defining 
 $g(x_{Prey},x_{Predator}) = \beta x_{Prey}$, $f(x_{Prey}) = \alpha$ , and $\delta = \beta \epsilon$.
