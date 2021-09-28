@@ -1,0 +1,6 @@
+p; Prey; 10
+p; Predator; 10
+p; BirthPrey; 1.1
+p; DeadPrey; 0.4
+p; BirthPredator; 0.1
+p; DeadPredator; 0.4

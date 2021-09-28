@@ -1,31 +1,73 @@
 -   [The Lotka–Volterra model](#the-lotkavolterra-model)
--   [Starting](#starting)
--   [Model generation](#model-generation)
+-   [First step: call the package](#first-step-call-the-package)
+-   [Second step: SPN Model
+    generation](#second-step-spn-model-generation)
     -   [Sensitivity analysis](#sensitivity-analysis)
     -   [Calibration analysis](#calibration-analysis)
     -   [Whatif Analysis](#whatif-analysis)
+-   [ESPN Model generation](#espn-model-generation)
+    -   [Whatif Analysis](#whatif-analysis-1)
+
+In this page we show how the and formalisms can be efficiently used to
+analyse the Lotka-Volterra model, also known as the *predator-prey
+model* .
 
 The Lotka–Volterra model
 ------------------------
 
-The Lotka–Volterra equations, also known as the predator–prey equations,
-are a pair of first-order nonlinear differential equations, frequently
-used to describe the dynamics of biological systems in which two species
-interact, one as a predator and the other as prey. The populations
-change through time according to the pair of equations:
+The Lotka-Volterra model is defined by a pair of s, which describes the
+dynamics of biological systems characterized by two species that may
+interact, one as a predator and the other as prey. From the literature
+it is possible to find several definitions of this model , and in a
+first classification of these models is reported depending on the
+*functional response*, i.e., the change in the rate of prey consumption
+by a predator when the prey density varied. In details, the functional
+response can be classified in three major types, namely **Holling type
+I, II, III**, whose definitions can be summarize as follows.
+
+1.  *Holling type I*: the number of prey consumed shows a linear
+    relationship with the prey density, the green line in Fig1.
+2.  *Holling type II*: the gradient of the number of prey consumed
+    decreases monotonically with increasing prey density, eventually
+    saturating at a constant value of prey consumption, the orange line
+    in Fig1. This follows from the assumption that the consumer is
+    limited by its capacity to process food. A real example of this
+    phenomena was published in considering wolves and caribou. It was
+    shown that the proportion of caribou killed per wolf decreases as
+    caribou density increases, given that wolves are more easily
+    satiated and the total number of caribou kills reaches a plateau.
+    Mathematically, this model is equivalent to the model of enzime
+    kinetics developed in 1913 by L. Michaelis and M. Menten .
+3.  *Holling type III*: the gradient of the number of prey consumed
+    first increases and then decreases with increasing prey density, the
+    blue line in Fig.1. This sigmoidal behaviour has been attributed to
+    the existence of ‘learning behaviour’ in the predator population,
+    for example predators learning more specialised techniques for
+    hunting or prey handling.
+
+![Fig.1 Holling types I, II, III functional
+responses.](./Figures/FunctionalResponsesGraph.png)
+
+Independently by the functional response exploited, a general version of
+the prey-predator model is defined by the following s system.
 
 where:
 
-1.  *x* is the number of prey (for example, rabbits);
-2.  *y* is the number of some predator (for example, foxes);
-3.  $\\frac{dy}{dt}$ and $\\frac{dx}{dt}$ represent the instantaneous
-    growth rates of the two populations;
-4.  *t* represents time;
-5.  *α*, *β*, *γ*, *θ* are positive real parameters describing the
-    interaction of the two species.
+1.  *x*<sub>*P**r**e**y*</sub> is the number of preys (e.g., caribou,
+    rabbits, etc);
+2.  *x*<sub>*P**r**e**d**a**t**o**r*</sub> is the number of predators
+    (e.g., wolves, foxes, etc);
+3.  *ν* represents time;
+4.  *f*(*x*<sub>*P**r**e**y*</sub>) is the individual prey growth rate
+    in the absence of predators;
+5.  *g*(*x*<sub>*P**r**e**y*</sub>, *x*<sub>*P**r**e**d**a**t**o**r*</sub>)
+    is the functional response of the model;
+6.  *ϵ* is the efficiency of the predator in converting consumed prey
+    into predator offspring;
+7.  *γ* is the predator mortality rate.
 
-Starting
---------
+First step: call the package
+----------------------------
 
     library(epimod)
 
@@ -33,8 +75,50 @@ Download all the docker images used by *epimod*:
 
     downloadContainers()
 
-Model generation
-----------------
+Second step: SPN Model generation
+---------------------------------
+
+The simplest and more known prey-predator model exploits a functional
+response of type I, in which a predator might interact with all the
+prey, thus the product of the two populations is the obvious outcome.
+This model can be easily represented using the SPN formalism, see Fig.2,
+from which the following ODEs system can be derived:
+
+where:
+
+1.  *x*<sub>*P**r**e**y*</sub> is the average number of tokens in the
+    *Prey* place, representing the preys;
+2.  *x*<sub>*P**r**e**d**a**t**o**r*</sub> is the average number of
+    tokens in the *Predator* place, representing the predators;
+3.  *α*, *β*, *γ*, *θ* are positive real parameters describing the
+    interaction of the two species and defining the rate of the
+    *BirthPrey*, *DeathPrey*, *BirthPredator*, *DeathPrey* transitions,
+    respectively.
+
+Let use note that Eq.s 2 can be obtained from Eq.s 1 defining
+*g*(*x*<sub>*P**r**e**y*</sub>, *x*<sub>*P**r**e**d**a**t**o**r*</sub>) = *β**x*<sub>*P**r**e**y*</sub>,
+*f*(*x*<sub>*P**r**e**y*</sub>) = *α* , and *δ* = *β**ϵ*.
+
+![Fig.2 The Lotka-Volterra model represented exploiting the SPN
+formalism.](./Figures/LotkaVolterraSPN1.png)
+
+![Fig.3 The Lotka-Volterra model represented exploiting the SSN
+formalism, considering different territories and prey
+species.](./Figures/LotkaVolterraSSN1.png)
+
+In this model we are assuming that the prey have an unlimited food
+supply and it is able to reproduce exponentially (*BirthPrey*
+transition), unless subject to predation (*DeathPrey* transition).
+Differently, the food supply of the predator population depends entirely
+on the size of the prey population. Thus, the predator birth depends
+linearly on the number of prey at a specific time point (*BirthPredator*
+transition), while the predators death does not depend on it
+(*DeathPredator* transition). We can denote that all the transitions
+have a velocity rate defined according to Mass Action (MA) law.
+
+Therefore, starting from the the SPN model saved in the
+*./Net/Lotka-Volterra.PNPRO* we can generate the solver which will be
+used throughtout the analysis.
 
 
     model_generation(net_fname = "./Net/Lotka-Volterra.PNPRO")
@@ -148,8 +232,8 @@ the same name of the corresponding R file.
 
 ![](ReadMe_files/figure-markdown_strict/unnamed-chunk-10-1.png)
 
-![PRCC for the **Predator** place over
-time.](./Results/results_sensitivity_analysis/prcc_Lotka-Volterra-sensitivity.pdf)
+![Fig.4 PRCC for the **Predator** place over
+time.](./Figures/prcc_Lotka-Volterra-sensitivity.png)
 
 Running the sensisitivity analysis, we can replicate the results
 reported on Wikipedia,
@@ -183,5 +267,30 @@ general idea of the simulation’ results.
                       optim_vector_mod = TRUE,
                       max.time = 60 # seconds
     )
+
+### Whatif Analysis
+
+Finally, the periodic dynamics of the system can be obatined running the
+model analysis function as follows:
+
+
+    model_analysis(solver_fname = "Net/Lotka-Volterra.solver",
+                      parameters_fname = "Input/Paramters_list.csv",
+                      f_time = 50,
+                      s_time = .5
+    )
+
+In Fig.5 the Lotka-Volterra dynamics are showed fixing: $= 1.1 $,
+*β* = 0.4, *γ* = 0.1, *θ* = 0.4, and the initial number of both the
+species equals to 10.
+
+![Fig.5 The Lotka-Volterra dynamics.](./Figures/Dynamics.png)
+
+ESPN Model generation
+---------------------
+
+
+    model_generation(net_fname = "./Net/Lotka-Volterra.PNPRO",
+                     functions_fname = "Cpp/transitions.cpp")
 
 ### Whatif Analysis
