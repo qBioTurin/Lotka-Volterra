@@ -548,3 +548,29 @@ model_generation(net_fname = "./Net/ESPN_LotkaVolterra.PNPRO",
 <!--         strip.text = element_text(face="bold",size = 15))+ -->
 <!--   labs(x="Prey", y="Prey consumed" ) -->
 <!-- ``` -->
+
+## References
+
+Keeling, Matt J, and Pejman Rohani. 2011. *Modeling Infectious Diseases
+in Humans and Animals*. Princeton University Press.
+
+Kurtz, T. G. 1970. “Solutions of Ordinary Differential Equations as
+Limits of Pure Jump Markov Processes.” *J. Appl. Probab.* 1 (7): 49–58.
+
+Marsan, M. Ajmone, G. Balbo, G. Conte, S. Donatelli, and G.
+Franceschinis. 1995. *Modelling with Generalized Stochastic Petri Nets*.
+New York, NY, USA: J. Wiley.
+
+Pernice, S., M. Pennisi, G. Romano, A. Maglione, S. Cutrupi, F.
+Pappalardo, G. Balbo, M. Beccuti, F. Cordero, and R. A. Calogero. 2019.
+“A Computational Approach Based on the Colored Petri Net Formalism for
+Studying Multiple Sclerosis.” *BMC Bioinformatics*.
+
+Veiga Leprevost, Felipe da, Björn A Grüning, Saulo Alves Aflitos, Hannes
+L Röst, Julian Uszkoreit, Harald Barsnes, Marc Vaudel, et al. 2017.
+“BioContainers: an open-source and community-driven framework for
+software standardization.” *Bioinformatics* 33 (16): 2580–2.
+
+Yang Xiang, Sylvain Gubian, Brian Suomela, and Julia Hoeng. 2012.
+“Generalized Simulated Annealing for Efficient Global Optimization: The
+GenSA Package for R.” *The R Journal*. <http://journal.r-project.org/>.
