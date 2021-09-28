@@ -4,16 +4,15 @@ author: "Beccuti Marco, Castagno Paolo, Pernice Simone"
 header-includes: \usepackage{float} \usepackage{url} \usepackage{booktabs} \usepackage{multirow}
   \floatplacement{figure}{H} \usepackage{caption} \captionsetup[table]{skip=10pt}
 output:
-  html_document:
+  md_document:
     toc: yes
     toc_depth: 3
-  md_document:
+  html_document:
     toc: yes
     toc_depth: 3
   pdf_document:
     toc: yes
     toc_depth: '3'
-bibliography: biblio.bib
 vignette: |
   %\VignetteIndexEntry{my-vignette} %\VignetteEncoding{UTF-8} %\VignetteEngine{knitr::rmarkdown}
 ---

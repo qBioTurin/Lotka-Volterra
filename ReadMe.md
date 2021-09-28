@@ -6,7 +6,6 @@
     -   [Calibration analysis](#calibration-analysis)
     -   [Whatif Analysis](#whatif-analysis)
 -   [ESPN Model generation](#espn-model-generation)
-    -   [Whatif Analysis](#whatif-analysis-1)
 
 In this page we show how the and formalisms can be efficiently used to
 analyse the Lotka-Volterra model, also known as the *predator-prey
@@ -102,10 +101,6 @@ Let use note that Eq.s 2 can be obtained from Eq.s 1 defining
 ![Fig.2 The Lotka-Volterra model represented exploiting the SPN
 formalism.](./Figures/LotkaVolterraSPN1.png)
 
-![Fig.3 The Lotka-Volterra model represented exploiting the SSN
-formalism, considering different territories and prey
-species.](./Figures/LotkaVolterraSSN1.png)
-
 In this model we are assuming that the prey have an unlimited food
 supply and it is able to reproduce exponentially (*BirthPrey*
 transition), unless subject to predation (*DeathPrey* transition).
@@ -144,7 +139,10 @@ analysis taking as input
     #>   V1    V2               V3                       V4                     V5
     #> 1  i  init  init_generation  min_init = c(0.9 , 0.8)  max_init = c(1.8 , 2)
 
-1.  functions\_fname (*Functions.R*): …
+1.  functions\_fname (*Functions.R*): an R file storing all the
+    functions that have to be exploited to generate the associated
+    paramter from *parameters\_fname*. In this case we want to generate
+    the SPN initial marking exploiting the uniform distribution:
 
 <!-- -->
 
@@ -159,7 +157,10 @@ analysis taking as input
        return( c(i_1,i_2) )
     }
 
-1.  target\_value\_fname (*Target.R*): … .
+1.  target\_value\_fname (*Target.R*): an R function in which the place,
+    w.r.t. the PRCC has to be calculated, must be selected from the
+    output data.frame (which represents the output file *.trace*
+    reporting the dynamics of each place).
 
 Assuming the following fixed rates: *β* = 4/3, *θ* = 1. Than we change
 the prey and predator initial conditions from 200 to 1800, and the prey
@@ -254,6 +255,10 @@ general idea of the simulation’ results.
 
 ### Calibration analysis
 
+By exploiting the calibration function we want to calibrate our model in
+order to fit the dynamics w.r.t. the reference data, where the fittinf
+is defined by the distance implemented in *msqd.R*.
+
 
     model_calibration(solver_fname = "Net/Lotka-Volterra.solver",
                       reference_data = "Input/reference_data.csv",
@@ -279,17 +284,127 @@ model analysis function as follows:
                       s_time = .5
     )
 
-In Fig.5 the Lotka-Volterra dynamics are showed fixing: $= 1.1 $,
+In Fig.5 the Lotka-Volterra dynamics are showed fixing: *α* = 1.1,
 *β* = 0.4, *γ* = 0.1, *θ* = 0.4, and the initial number of both the
 species equals to 10.
 
 ![Fig.5 The Lotka-Volterra dynamics.](./Figures/Dynamics.png)
 
+
+    model_analysis(solver_fname = "Net/Lotka-Volterra.solver",
+                   parameters_fname = "Input/Paramters_list.csv",
+                   f_time = 50,
+                   s_time = .5,
+                   solver_type = "SSA",
+                   n_run = 500,
+                   parallel_processors = 2
+    )
+
 ESPN Model generation
 ---------------------
 
+However, most ecological interest in functional responses has to involve
+types II and III. For instance, if it is considered that a single
+predator can feed only until the stomach is full, a saturation function
+is needed to indicate the intake of food, which is modeled using the
+Holling type II term. A simple example of this term is expressed by Eq.
+3, where *a* is the attack rate at which the consumer encounters food
+items per unit of food density, and *h* is the average handling time
+spent on processing a food item. Indeed, more complex examples are given
+in .
 
-    model_generation(net_fname = "./Net/Lotka-Volterra.PNPRO",
+Similarly, type III functional responses can be characterized by the Eq.
+2 if the attack constant rate *a* is defined in function of the number
+of preys , for instance a general form is given by a hyperbolic function
+of *x*<sub>*P**r**e**y*</sub>: in which *b*, *c*, *d* are constants.
+Thus, we can easily derive a general equation of type III as follows:
+
+Finally, considering the functional response types described in Eq.s 3
+and 4, in terms of SPN they should define the rate of the *DeathPrey*
+and *BirthPredator* transitions. Indeed this is not easy using the SPN
+formalism, while it can be achieved easily by exploiting the ESPN
+formalism.
+
+Indeed in the extended formalisms it is possible to integrate in the
+model more complex functional response than the type I by defining the
+*DeathPrey* (and *BirthPredator*) transition as a general transition.
+Let us recall that a general transition *t* ∈ *T*<sub>*g*</sub> is
+defined by a function *f*<sub>*t*</sub>(*x̂*(*ν*), *ν*), where *x̂*(*ν*)
+represents the vector of the average number of tokens for all the
+transition input places at time *ν*. Hence, the general transition
+velocities of Fig.5 should be defined as follows
+
+with *g*() equals to *g*<sub>*I**I*</sub>() from Eq. 3 or
+*g*<sub>*I**I**I*</sub>() from Eq. 4 in order to use a functional
+response of type II or III, respectively.
+
+![Fig. 5 The Lotka-Volterra model represented exploiting the formalism,
+in which we used black boxes to highlight the general
+transitions.](./Figures/LotkaVolterraESPN.png)
+
+
+    model_generation(net_fname = "./Net/ESPN_LotkaVolterra.PNPRO",
                      functions_fname = "Cpp/transitions.cpp")
 
-### Whatif Analysis
+<!-- ### Whatif Analysis -->
+<!-- ```{r, linewidth = 80, eval = FALSE } -->
+<!-- model_analysis(solver_fname = "Net/ESPN_LotkaVolterra.solver", -->
+<!--                functions_fname = "Rfunction/FunctionsGeneral.R", -->
+<!--                parameters_fname = "Input/Paramters_listESPN.csv", -->
+<!--                f_time = 50, -->
+<!--                s_time = .5 -->
+<!-- ) -->
+<!-- ``` -->
+<!-- ```{r, linewidth = 80, echo = F, eval = FALSE } -->
+<!-- model_analysis(solver_fname = "Net/ESPN_LotkaVolterra.solver", -->
+<!--                functions_fname = "Rfunction/FunctionsGeneral.R", -->
+<!--                parameters_fname = "Input/Paramters_listESPN.csv", -->
+<!--                f_time = 50, -->
+<!--                s_time = .5 -->
+<!-- ) -->
+<!-- Dynamics<-read.csv("results_model_analysis/ESPN_LotkaVolterra-analysys-1.trace",  sep = "") -->
+<!-- ggplot(Dynamics, aes(x= Time))+ -->
+<!--   geom_line(aes(y= Predator, color = "Predator"))+ -->
+<!--   geom_line(aes(y= Prey, color = "Prey"))+  -->
+<!--   theme(axis.text=element_text(size = 15, hjust = 0.5), -->
+<!--         axis.text.x=element_text(angle=+90,vjust=0.5, hjust=1), -->
+<!--         axis.title=element_text(size=18,face="bold"), -->
+<!--         axis.line = element_line(colour="black"), -->
+<!--         plot.title=element_text(size=20, face="bold", vjust=1, lineheight=0.6), -->
+<!--         legend.title = element_blank(), -->
+<!--         legend.text=element_text(size=14), -->
+<!--         legend.position= c(.85, .85), -->
+<!--         legend.background = element_rect(size=0.5, linetype="solid",  -->
+<!--                                          colour ="black"), -->
+<!--         legend.key=element_blank(), -->
+<!--         legend.key.size = unit(.9, "cm"), -->
+<!--         legend.key.width = unit(.9,"cm"), -->
+<!--         panel.background = element_rect(colour = NA), -->
+<!--         plot.background = element_rect(colour = NA), -->
+<!--         plot.margin=unit(c(0,5,5,5),"mm"), -->
+<!--         strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"), -->
+<!--         strip.text = element_text(face="bold",size = 15))+ -->
+<!--   labs(x="Time", y="Populations size" ) -->
+<!-- DynamicsFirstPart <- Dynamics[1:min(which(Dynamics$PreyConsumed>9)),] -->
+<!-- ggplot(Dynamics, aes(x= Prey))+ -->
+<!--   geom_line(aes(y= PreyConsumed))+  -->
+<!--   theme(axis.text=element_text(size = 15, hjust = 0.5), -->
+<!--         axis.text.x=element_text(angle=+90,vjust=0.5, hjust=1), -->
+<!--         axis.title=element_text(size=18,face="bold"), -->
+<!--         axis.line = element_line(colour="black"), -->
+<!--         plot.title=element_text(size=20, face="bold", vjust=1, lineheight=0.6), -->
+<!--         legend.title = element_blank(), -->
+<!--         legend.text=element_text(size=14), -->
+<!--         legend.position= c(.85, .85), -->
+<!--         legend.background = element_rect(size=0.5, linetype="solid",  -->
+<!--                                          colour ="black"), -->
+<!--         legend.key=element_blank(), -->
+<!--         legend.key.size = unit(.9, "cm"), -->
+<!--         legend.key.width = unit(.9,"cm"), -->
+<!--         panel.background = element_rect(colour = NA), -->
+<!--         plot.background = element_rect(colour = NA), -->
+<!--         plot.margin=unit(c(0,5,5,5),"mm"), -->
+<!--         strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"), -->
+<!--         strip.text = element_text(face="bold",size = 15))+ -->
+<!--   labs(x="Prey", y="Prey consumed" ) -->
+<!-- ``` -->
