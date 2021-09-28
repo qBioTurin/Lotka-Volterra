@@ -43,11 +43,8 @@ functional response can be classified in three major types, namely **Holling typ
 
 Independently by the functional response exploited, a general version of the prey-predator model is defined by the following \gls{ODE}s system.
 
-\begin{align}\label{eq:HollinGeneral}
-Eq.s 1 & \\
-    \frac{dx_{Prey}}{d\nu} &= f(x_{Prey}) x_{Prey}- g(x_{Prey},x_{Predator}) x_{Predator},\\
-    \frac{dx_{Predator}}{d\nu} &= \epsilon g(x_{Prey},x_{Predator})x_{Predator} -\gamma x_{Predator},  \nonumber 
-\end{align}
+![](./Figures/equation1.png)
+
 where:
 
 1. $x_{Prey}$ is the number of preys (e.g., caribou, rabbits, etc);
@@ -76,11 +73,7 @@ downloadContainers()
 
 The simplest and more known prey-predator model \cite{lotka1998analytical} exploits a functional response of type I, in which a predator might interact with all the prey, thus the product of the two populations is the obvious outcome. This model can be easily represented using the SPN formalism, see Fig.2, from which the following ODEs system can be derived:
 
-\begin{align}
-Eq.s 2 & \\
-    \frac{d\hat{x}_{Prey}}{d\nu} &= \alpha \hat{x}_{Prey}-\beta \hat{x}_{Prey}\hat{x}_{Predator},\\
-    \frac{d\hat{x}_{Predator}}{d\nu} &= \delta \hat{x}_{Prey}\hat{x}_{Predator}-\gamma \hat{x}_{Predator},  \nonumber 
-\end{align}
+![](./Figures/equation2.png)
 
 where:
 
@@ -193,7 +186,7 @@ sensitivity<-sensitivity_analysis(n_config = 30,
 ```
 
 
-```{r, linewidth=80, echo=F, message=F }
+```{r, linewidth=80, echo=F, message=F, eval=FALSE }
 
 ##############################
 ## Let draw the orbits characterizing the phase-space
@@ -244,12 +237,16 @@ ggplot( )+
               arrow=arrow(length=unit(0.3,"cm"),ends="first"))
 ```
 
-![Fig.4 PRCC for the **Predator** place over time.](./Figures/prcc_Lotka-Volterra-sensitivity.png)
+
+
+![Fig.3 PRCC for the **Predator** place over time.](./Figures/prcc_Lotka-Volterra-sensitivity.png)
 
 Running the sensisitivity analysis, we can replicate the results reported on Wikipedia, *https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations*. Indeed, textual file for each generated parameter combination (i.e. 20) containing the system  solution is returned. Each file is characterized by as many rows as the solution time points (obtained dividing the final time point by the time step) and as many columns as the system components.
 We can now generate the phase-space plot, where it is possible to see that the predators thrive when there are plentiful prey but, ultimately, outstrip their food supply and decline. As the predator population is low, the prey population will increase again. These dynamics continue in a cycle of growth and decline.
 
 Let us note that it is possible to run the sensitivity analysys without PRCC or ranking, in the case that we are intersted only on to have a general idea of the simulation' results.
+
+![Fig.4 ](./Figures/DynamicsRanking.png)
 
 ### Calibration analysis
 
@@ -438,31 +435,27 @@ ggplot(DynamicsFirstPart, aes(x= Prey))+
 
 ## ESPN Model generation
 
-However, most ecological interest in functional responses has to involve types II and III.  For instance, if it is considered that a single predator can feed only until the stomach is full, a saturation function is needed to indicate the intake of food, which is modeled using the Holling type II term. A simple example of this term is expressed by Eq. 3, where $a$ is the attack rate at which the consumer encounters food items per unit of food density, and $h$ is the average handling time spent on processing a food item. Indeed, more complex examples are given in \cite{cosner1999effects,rahman2013predator}. 
+However, most ecological interest in functional responses has to involve types II and III.  For instance, if it is considered that a single predator can feed only until the stomach is full, a saturation function is needed to indicate the intake of food, which is modeled using the Holling type II term. A simple example of this term is expressed by Eq. 3, where $a$ is the attack rate at which the consumer encounters food items per unit of food density, and $h$ is the average handling time spent on processing a food item. 
 
-\begin{equation}
-   g_{II}(x_{Prey},x_{Predator}) = \dfrac{a\ x_{Prey}}{1+ a \  h \ x_{Prey}}. \qquad Eq.\ 3
-\end{equation}
+![](./Figures/equation3.png)
+
 
 Similarly, type III functional responses can be characterized by the Eq. 2 if the attack constant rate $a$ is defined in function of the number of preys \cite{juliano2001nonlinear}, for instance a general form is given by a hyperbolic function of $x_{Prey}$:
-\begin{equation}\label{eq:AttackRate}
-   a = \dfrac{d + b\  x_{Prey}}{1+ c \  x_{Prey}}
-\end{equation}
+
+![](./Figures/equation.png)
+
 in which $b,\ c,\ d$ are constants.
 Thus, we can easily derive a general equation of type III as follows:
-\begin{equation}
-   g_{III}(x_{Prey},x_{Predator}) = \dfrac{d\  x_{Prey} + b \  x_{Prey}^2 }{1+ c\ x_{Prey} + d \  h \  x_{Prey} + b\ h\ x_{Prey}^2 }. \qquad Eq.\ 4
-\end{equation}
+![](./Figures/equation4.png)
+
 
 Finally, considering the functional response types described in Eq.s 3 and 4, in terms of SPN they should define the rate of the *DeathPrey* and *BirthPredator* transitions. Indeed this is not easy using the SPN formalism, while it can be achieved easily by exploiting the ESPN formalism. 
 
 Indeed in the extended formalisms it is possible to integrate in the model more complex functional response than the type I by defining the *DeathPrey* (and *BirthPredator*) transition as a general transition. Let us recall that a general transition $t\in T_g$ is defined by a function 
 $f_{t}(\hat{x}(\nu),\nu )$, where $\hat{x}(\nu)$ represents the vector of the average number of tokens for all the transition input places at time $\nu$. Hence, the general transition velocities of Fig.5 should be defined as follows
 
-\begin{align}\label{eq:FNLotkaV}
-    f_{DeathPrey}(\hat{x}(\nu),\nu)  &= g(x_{Prey},x_{Predator})\  x_{Predator}\\\nonumber
-    f_{BirthPredator}(\hat{x}(\nu),\nu)  &= \epsilon g(x_{Prey},x_{Predator})\  x_{Predator}
-\end{align}
+![](./Figures/equation5.png)
+
 
 with $g()$ equals to $g_{II}()$ from  Eq. 3 or $g_{III}()$ from Eq. 4 in order to use a functional response of type II or III, respectively.
 

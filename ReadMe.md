@@ -6,6 +6,7 @@
     -   [Calibration analysis](#calibration-analysis)
     -   [Whatif Analysis](#whatif-analysis)
 -   [ESPN Model generation](#espn-model-generation)
+-   [References](#references)
 
 In this page we show how the and formalisms can be efficiently used to
 analyse the Lotka-Volterra model, also known as the *predator-prey
@@ -409,9 +410,8 @@ transitions.](./Figures/LotkaVolterraESPN.png)
 <!--   labs(x="Prey", y="Prey consumed" ) -->
 <!-- ``` -->
 
-
 References
-==========
+----------
 
 Keeling, Matt J, and Pejman Rohani. 2011. *Modeling Infectious Diseases
 in Humans and Animals*. Princeton University Press.
@@ -429,10 +429,11 @@ Pappalardo, G. Balbo, M. Beccuti, F. Cordero, and R. A. Calogero. 2019.
 Studying Multiple Sclerosis.” *BMC Bioinformatics*.
 
 Veiga Leprevost, Felipe da, Björn A Grüning, Saulo Alves Aflitos, Hannes
-L Röst, Julian Uszkoreit, Harald Barsnes, Marc Vaudel, et al. 2017.
+L Röst, Julian Uszkoreit, Harald Barsnes, Marc Vaudel, et al. 2017.
 “BioContainers: an open-source and community-driven framework for
 software standardization.” *Bioinformatics* 33 (16): 2580–2.
 
 Yang Xiang, Sylvain Gubian, Brian Suomela, and Julia Hoeng. 2012.
 “Generalized Simulated Annealing for Efficient Global Optimization: The
-GenSA Package for R.” *The R Journal*. <http://journal.r-project.org/>.
+GenSA Package for R.” *The R Journal*.
+<a href="http://journal.r-project.org/" class="uri">http://journal.r-project.org/</a>.
