@@ -15,7 +15,7 @@ model* .
 The Lotka–Volterra model
 ------------------------
 
-The Lotka-Volterra model is defined by a pair of s, which describes the
+The Lotka-Volterra model is defined by a pair of ODEs, which describes the
 dynamics of biological systems characterized by two species that may
 interact, one as a predator and the other as prey. From the literature
 it is possible to find several definitions of this model , and in a
@@ -51,7 +51,7 @@ responses.](./Figures/FunctionalResponsesGraph.png)
 Independently by the functional response exploited, a general version of
 the prey-predator model is defined by the following s system.
 
-![](./Figures/equation1.png)
+![](./Figures/equation1_whitebg.png)
 
 where:
 
@@ -86,7 +86,7 @@ prey, thus the product of the two populations is the obvious outcome.
 This model can be easily represented using the SPN formalism, see Fig.2,
 from which the following ODEs system can be derived:
 
-![](./Figures/equation2.png)
+![](./Figures/equation2_whitebg.png)
 
 where:
 
@@ -133,18 +133,17 @@ analysis taking as input
 2.  the final solution time,
 3.  the time step defining the frequency at which explicit estimates for
     the system values are desired,
-4.  parameters\_fname (*Functions\_list.csv*): a textual file in which
-    the parameters to be studied are listed associated with their range
-    of variability. significato delle colonne, e che serve il ; come
-    sep, spazi non nei path An example is given by the following file,
-    where
+4.  parameters\_fname (*Functions\_list.csv*):  a textual file in which the parameters to be studied are listed associated with their range of variability. An example is given by the following file, where
+
+
 
 <!-- -->
 
+     
     #>   V1    V2               V3                       V4                     V5
     #> 1  i  init  init_generation  min_init = c(0.9 , 0.8)  max_init = c(1.8 , 2)
 
-1.  functions\_fname (*Functions.R*): an R file storing all the
+5.  functions\_fname (*Functions.R*): an R file storing all the
     functions that have to be exploited to generate the associated
     paramter from *parameters\_fname*. In this case we want to generate
     the SPN initial marking exploiting the uniform distribution:
@@ -225,16 +224,16 @@ Let us note that the name of the distance and target function must have
 the same name of the corresponding R file.
 
 
-    sensitivity<-sensitivity_analysis(n_config = 30,
-                                      parameters_fname = "Input/Functions_list.csv",
-                                      functions_fname = "Rfunction/Functions.R",
-                                      solver_fname = "Net/Lotka-Volterra.solver",
-                                      reference_data = "Input/reference_data.csv",
-                                      distance_measure_fname = "Rfunction/msqd.R" ,
-                                      target_value_fname = "Rfunction/Target.R" ,
-                                      parallel_processors = 2,
-                                      f_time = 20,
-                                      s_time = .1)
+    sensitivity<-model.sensitivity(n_config = 30,
+                               	parameters_fname = "Input/Functions_list.csv",
+                               	functions_fname = "Rfunction/Functions.R",
+                               	solver_fname = "Net/Lotka-Volterra.solver",
+                               	reference_data = "Input/reference_data.csv",
+                               	distance_measure = "msqd" ,
+                               	target_value  = "Target" ,
+                               	parallel_processors = 2,
+                               	f_time = 20,
+                               	s_time = .1)                                 
 
 ![Fig.3 PRCC for the **Predator** place over
 time.](./Figures/prcc_Lotka-Volterra-sensitivity.png)
@@ -265,17 +264,20 @@ order to fit the dynamics w.r.t. the reference data, where the fittinf
 is defined by the distance implemented in *msqd.R*.
 
 
-    model_calibration(solver_fname = "Net/Lotka-Volterra.solver",
-                      reference_data = "Input/reference_data.csv",
-                      distance_measure_fname = "Rfunction/msqd.R" ,
-                      f_time = 20,
-                      s_time = .1,
-                      # Vectors to control the optimization
-                      ini_v = c(5,5),
-                      ub_v = c(10, 10),
-                      lb_v = c(0, 0),
-                      max.time = 60 # seconds
-    )
+    model.calibration(solver_fname = "Net/Lotka-Volterra.solver",
+    	 		  parameters_fname = "Input/Functions_list.csv",
+                      functions_fname = "Rfunction/Functions.R",
+    	              reference_data = "Input/reference_data.csv",
+    	              distance_measure = "msqd" ,
+    	              f_time = 20,
+    	              s_time = .1,
+    	              # Vectors to control the optimization
+    	              ini_v = c(5,5),
+    	              ub_v = c(10, 10),
+    	              lb_v = c(0, 0),
+    	              max.time = 60 # seconds
+		)
+    
 
 ### Whatif Analysis
 
@@ -317,17 +319,17 @@ Holling type II term. A simple example of this term is expressed by Eq.
 items per unit of food density, and *h* is the average handling time
 spent on processing a food item.
 
-![](./Figures/equation3.png)
+![](./Figures/equation3_whitebg.png)
 
 Similarly, type III functional responses can be characterized by the Eq.
 2 if the attack constant rate *a* is defined in function of the number
 of preys , for instance a general form is given by a hyperbolic function
 of *x*<sub>*P**r**e**y*</sub>:
 
-![](./Figures/equation.png)
+![](./Figures/equation_whitebg.png)
 
 in which *b*, *c*, *d* are constants. Thus, we can easily derive a
-general equation of type III as follows: ![](./Figures/equation4.png)
+general equation of type III as follows: ![](./Figures/equation4_whitebg.png)
 
 Finally, considering the functional response types described in Eq.s 3
 and 4, in terms of SPN they should define the rate of the *DeathPrey*
@@ -344,83 +346,48 @@ represents the vector of the average number of tokens for all the
 transition input places at time *ν*. Hence, the general transition
 velocities of Fig.5 should be defined as follows
 
-![](./Figures/equation5.png)
+![](./Figures/equation5_whitebg.png)
 
 with *g*() equals to *g*<sub>*I**I*</sub>() from Eq. 3 or
 *g*<sub>*I**I**I*</sub>() from Eq. 4 in order to use a functional
 response of type II or III, respectively.
 
-![Fig. 5 The Lotka-Volterra model represented exploiting the formalism,
-in which we used black boxes to highlight the general
-transitions.](./Figures/LotkaVolterraESPN.png)
+### Whatif Analysis Holling type 2
 
 
-    model_generation(net_fname = "./Net/ESPN_LotkaVolterra.PNPRO",
-                     functions_fname = "Cpp/transitions.cpp")
+![](./Figures/ESPN_holling_type2.png)
 
-<!-- ### Whatif Analysis -->
-<!-- ```{r, linewidth = 80, eval = FALSE } -->
-<!-- model_analysis(solver_fname = "Net/ESPN_LotkaVolterra.solver", -->
-<!--                functions_fname = "Rfunction/FunctionsGeneral.R", -->
-<!--                parameters_fname = "Input/Paramters_listESPN.csv", -->
-<!--                f_time = 50, -->
-<!--                s_time = .5 -->
-<!-- ) -->
-<!-- ``` -->
-<!-- ```{r, linewidth = 80, echo = F, eval = FALSE } -->
-<!-- model_analysis(solver_fname = "Net/ESPN_LotkaVolterra.solver", -->
-<!--                functions_fname = "Rfunction/FunctionsGeneral.R", -->
-<!--                parameters_fname = "Input/Paramters_listESPN.csv", -->
-<!--                f_time = 50, -->
-<!--                s_time = .5 -->
-<!-- ) -->
-<!-- Dynamics<-read.csv("results_model_analysis/ESPN_LotkaVolterra-analysys-1.trace",  sep = "") -->
-<!-- ggplot(Dynamics, aes(x= Time))+ -->
-<!--   geom_line(aes(y= Predator, color = "Predator"))+ -->
-<!--   geom_line(aes(y= Prey, color = "Prey"))+  -->
-<!--   theme(axis.text=element_text(size = 15, hjust = 0.5), -->
-<!--         axis.text.x=element_text(angle=+90,vjust=0.5, hjust=1), -->
-<!--         axis.title=element_text(size=18,face="bold"), -->
-<!--         axis.line = element_line(colour="black"), -->
-<!--         plot.title=element_text(size=20, face="bold", vjust=1, lineheight=0.6), -->
-<!--         legend.title = element_blank(), -->
-<!--         legend.text=element_text(size=14), -->
-<!--         legend.position= c(.85, .85), -->
-<!--         legend.background = element_rect(size=0.5, linetype="solid",  -->
-<!--                                          colour ="black"), -->
-<!--         legend.key=element_blank(), -->
-<!--         legend.key.size = unit(.9, "cm"), -->
-<!--         legend.key.width = unit(.9,"cm"), -->
-<!--         panel.background = element_rect(colour = NA), -->
-<!--         plot.background = element_rect(colour = NA), -->
-<!--         plot.margin=unit(c(0,5,5,5),"mm"), -->
-<!--         strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"), -->
-<!--         strip.text = element_text(face="bold",size = 15))+ -->
-<!--   labs(x="Time", y="Populations size" ) -->
-<!-- DynamicsFirstPart <- Dynamics[1:min(which(Dynamics$PreyConsumed>9)),] -->
-<!-- ggplot(Dynamics, aes(x= Prey))+ -->
-<!--   geom_line(aes(y= PreyConsumed))+  -->
-<!--   theme(axis.text=element_text(size = 15, hjust = 0.5), -->
-<!--         axis.text.x=element_text(angle=+90,vjust=0.5, hjust=1), -->
-<!--         axis.title=element_text(size=18,face="bold"), -->
-<!--         axis.line = element_line(colour="black"), -->
-<!--         plot.title=element_text(size=20, face="bold", vjust=1, lineheight=0.6), -->
-<!--         legend.title = element_blank(), -->
-<!--         legend.text=element_text(size=14), -->
-<!--         legend.position= c(.85, .85), -->
-<!--         legend.background = element_rect(size=0.5, linetype="solid",  -->
-<!--                                          colour ="black"), -->
-<!--         legend.key=element_blank(), -->
-<!--         legend.key.size = unit(.9, "cm"), -->
-<!--         legend.key.width = unit(.9,"cm"), -->
-<!--         panel.background = element_rect(colour = NA), -->
-<!--         plot.background = element_rect(colour = NA), -->
-<!--         plot.margin=unit(c(0,5,5,5),"mm"), -->
-<!--         strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"), -->
-<!--         strip.text = element_text(face="bold",size = 15))+ -->
-<!--   labs(x="Prey", y="Prey consumed" ) -->
-<!-- ``` -->
+    model.generation(net_fname = "Lotka-Volterra-General.PNPRO", 
+                 transitions_fname = "../Cpp/transitions_holling_type2.cpp")
 
+
+
+    model.analysis(solver_fname = "Net/Lotka-Volterra-General.solver",
+                   functions_fname = "Rfunction/Functions.R",
+                   parameters_fname = "Input/Functions_list_FNgeneral.csv",
+                   f_time = 50,
+                   s_time = .5)
+                   
+![](./Figures/Dynamics_holling_type2.png)
+
+### Whatif Analysis Holling type 3
+
+![](./Figures/ESPN_holling_type3.png)
+
+
+    model.generation(net_fname = "Lotka-Volterra-General.PNPRO", 
+                 transitions_fname = "../Cpp/transitions_holling_type3.cpp")
+                 
+    
+    
+    model.analysis(solver_fname = "Net/Lotka-Volterra-General.solver",
+               functions_fname = "Rfunction/Functions.R",
+               parameters_fname = "Input/Functions_list_FNgeneral_type3.csv",
+               f_time = 50,
+               s_time = .5)
+
+![](./Figures/Dynamics_holling_type3.png)
+    
 References
 ----------
 
@@ -448,3 +415,5 @@ Yang Xiang, Sylvain Gubian, Brian Suomela, and Julia Hoeng. 2012.
 “Generalized Simulated Annealing for Efficient Global Optimization: The
 GenSA Package for R.” *The R Journal*.
 <a href="http://journal.r-project.org/" class="uri">http://journal.r-project.org/</a>.
+
+

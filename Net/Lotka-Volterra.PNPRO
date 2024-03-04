@@ -44,7 +44,7 @@
       <transition delay="0.6666667" name="BirthPrey" nservers-x="0.5" type="EXP" x="6.55" y="6.0"/>
       <transition delay="FN:DeathPrey" name="DeathPrey" type="GEN" x="22.55" y="6.0"/>
       <place label-x="-2.0" label-y="-1.5" name="Predator" x="16.0" y="19.0"/>
-      <transition delay="FN:BirthPredator" label-y="2.0" name="BirthPredator" type="GEN" x="6.55" y="19.0"/>
+      <transition delay="FN:BirthPredator" label-y="2.0" name="BirthPredator" nservers-x="0.5" type="EXP" x="6.55" y="19.0"/>
       <transition delay="1" label-y="2.0" name="DeathPredator" nservers-x="0.5" type="EXP" x="22.55" y="19.0"/>
     </nodes>
     <edges>

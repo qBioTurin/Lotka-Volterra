@@ -1,0 +1,7 @@
+|2
+Call["DeathPreyFunction", FromList["DeathPrey", 0], FromList["DeathPrey", 1], FromList["DeathPrey", 2]]
+|3
+Call["BirthPredatorFunction", FromList["BirthPredator", 0], FromList["BirthPredator", 1], FromList["BirthPredator", 2]]
+|256
+%
+|

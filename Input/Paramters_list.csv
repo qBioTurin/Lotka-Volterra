@@ -1,6 +1,6 @@
-p; Prey; 10
-p; Predator; 10
-p; BirthPrey; 1.1
-p; DeathPrey; 0.4
-p; BirthPredator; 0.1
-p; DeathPredator; 0.4
+m;Prey;10
+m;Predator;10
+c;BirthPrey;1.1
+c;DeathPrey;0.4
+c;BirthPredator;0.1
+c;DeathPredator;0.4
