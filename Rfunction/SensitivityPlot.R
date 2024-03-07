@@ -1,8 +1,8 @@
 library(ggplot2)
 
-SensitivityPlot <-function(rank=T,folder, scd_folder){
+SensitivityPlot <-function(rank=T,folder, scd_folder, RDATA_name, trace_name, ranking_name, prcc_name){
   #Changed the folder in which is contained the .RData file
-  load(paste0(scd_folder,"Lotka-Volterra-analysis.RData"))  
+  load(paste0(scd_folder, RDATA_name))  
   # Then, we read all the trajectories generated saving them in a list called
   # ListTraces. List that will be rewritten as a data frame in order to use ggplot.
   # ConfigID represents the initial condition associated to each trajectory,
@@ -16,17 +16,15 @@ SensitivityPlot <-function(rank=T,folder, scd_folder){
                        return(c(x,config[[1]][[x]][[3]]))
                      }) )
   
-  id.traces <- as.numeric(gsub("[^[:digit:].]", "",listFile) )
-  
-  print(id.traces)
-  
+  id.traces <- as.numeric(gsub(".*-(\\d+)\\.trace$", "\\1", listFile))
+
   if(rank){
-    load(paste0(folder,"ranking_Lotka-Volterra-sensitivity.RData"))
+    load(paste0(folder,ranking_name))
   }else{
     rank <- data.frame(measure = 0 , id = id.traces)
   }
   
-  prcc_file_path <- paste0(folder, "prcc_Lotka-Volterra-sensitivity.RData")
+  prcc_file_path <- paste0(folder, prcc_name)
   
   if(file.exists(prcc_file_path)) {
     load(prcc_file_path) 
@@ -38,20 +36,21 @@ SensitivityPlot <-function(rank=T,folder, scd_folder){
                                       sep = ""))
   
   ListTraces <- lapply(id.traces, function(x) {
-    trace.tmp <- read.csv(paste0(scd_folder, "Lotka-Volterra-analysis-", x, ".trace"), sep = "")
+      trace.tmp <- read.csv(paste0(scd_folder, trace_name, x, ".trace"), sep = "")
     
-    trace.tmp <- data.frame(trace.tmp, ID = x, 
-                            rank = rank[which(rank[, 2] == paste0("Lotka-Volterra-analysis-", x, ".trace")), 1])
-    
+      trace.tmp <- data.frame(trace.tmp, ID = x, 
+      rank = rank[which(rank[, 2] == paste0(trace_name, x, ".trace")), 1])
+
     return(trace.tmp)
   })
+  
     rank2 <- lapply(id.traces, function(x) {
     valori <- config[[1]][[x]][[3]]
     predator_value <- valori[1]
     prey_value <- valori[2]
     
     rnk.tmp <- data.frame(ID = x,
-                          distance = rank[which(rank[, 2] == paste0("Lotka-Volterra-analysis-", x, ".trace")), 1],
+                          distance = rank[which(rank[, 2] == paste0(trace_name, x, ".trace")), 1],
                           prey_rate = prey_value,
                           predator_rate = predator_value)
     return(rnk.tmp)
@@ -61,24 +60,7 @@ SensitivityPlot <-function(rank=T,folder, scd_folder){
   rank2 <- do.call("rbind", rank2)
   traces <- do.call("rbind", ListTraces)
   
-  plI <- ggplot(traces, aes(x = Prey, y = Predator, group = ID, color = rank)) +
-    geom_path(size = 1) +  
-    scale_color_gradientn(colours = c("red", "deepskyblue2", "cyan"),
-                          breaks = NULL) +
-    theme(axis.text = element_text(size = 18),
-          axis.title = element_text(size = 20, face = "bold"),
-          legend.text = element_text(size = 18),
-          legend.title = element_text(size = 20, face = "bold"),
-          legend.position = "right",
-          legend.key.size = unit(1.3, "cm"),
-          legend.key.width = unit(1.3, "cm")) +
-    labs(x = "Prey Population",
-         y = "Predator Population",
-         color = "Rank") 
-  
   prcc_filtered <- prcc[prcc$Param %in% c("init-1", "init-2"), ]
-  
-  
   
   plPrcc <- ggplot(prcc_filtered, aes(x = Time, y = prcc, colour = Param)) +
     geom_line() + 
@@ -87,7 +69,6 @@ SensitivityPlot <-function(rank=T,folder, scd_folder){
     theme_minimal() +
     scale_colour_manual(values = c("init-1" = "red", "init-2" = "blue"))
   
-  #print(plPrcc)
-  
+  print(plPrcc)
 }
 

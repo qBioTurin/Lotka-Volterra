@@ -17,7 +17,7 @@ ModelAnalysisPlot=function(trace_path, Stoch = F, print=T){
           plot.title=element_text(size=20, face="bold", vjust=1, lineheight=0.6), 
           legend.title = element_blank(), 
           legend.text=element_text(size=14), 
-          legend.position= c(.85, .85), 
+          legend.position.inside= c(.85, .85), 
           legend.background = element_rect(linewidth=0.5, linetype="solid",  
                                            colour ="black"), 
           legend.key=element_blank(), 

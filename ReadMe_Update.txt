@@ -18,3 +18,13 @@
 8) Deleted unnecessary folders (those obtained from analyses/sensitivity) as they can be generated when running main.R
 
 9) Modified the Input files and added a file with parameters for the holling type 3
+
+
+
+###Changes second git made by Lorenzo Chiabrando###
+
+1) Fixed general function input value
+
+2) Separated the Holling type 2 and 3 models into two different files
+
+3) Restructured the Main_Lotka_Volterra_General.R file, now the simulations are sequenced. First, all of Holling type 2 then type 3.

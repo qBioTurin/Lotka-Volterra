@@ -2,11 +2,7 @@ library(epimod)
 
 downloadContainers()
 
-main_dir <- getwd()
 setwd("./Net") 
-
-
-print(getwd())
 
 model.generation(net_fname = "Lotka-Volterra.PNPRO")
 
@@ -24,6 +20,10 @@ sensitivity<-model.sensitivity(n_config = 30,
                                parallel_processors = 2,
                                f_time = 20,
                                s_time = .1)
+
+source("./Rfunction/SensitivityPlot.R")
+pl = SensitivityPlot(folder = "Lotka-Volterra_sensitivity/", scd_folder = "Lotka-Volterra_analysis/", RDATA_name = "Lotka-Volterra-analysis.RData", trace_name = "Lotka-Volterra-analysis-", 
+                               ranking_name = "ranking_Lotka-Volterra-sensitivity.RData", prcc_name= "prcc_Lotka-Volterra-sensitivity.RData")
 
 # Model Calibration check
 
@@ -57,3 +57,4 @@ AnalysisPlot = ModelAnalysisPlot(Stoch = F ,print = F,
                                  trace_path = "./Lotka-Volterra_analysis/Lotka-Volterra-analysis-1.trace")
 
 print(AnalysisPlot)
+
